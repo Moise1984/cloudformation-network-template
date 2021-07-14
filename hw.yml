@@ -1,0 +1,24 @@
+Parameters:
+  MyVPC:
+    Description: VPC to operate in
+    Type: AWS::EC2::VPC::Id
+Resources:
+  WebServerSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Enable HTTP ingress
+      VpcId: !Ref MyVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '80'
+          ToPort: '80'
+          CidrIp: 0.0.0.0/0  
+  
+Outputs:     
+  WebServerSecurityGroup:
+    Description: The security group ID to use for public web servers
+    Value: !GetAtt 
+      - WebServerSecurityGroup
+      - GroupId
+    Export:
+      Name: !Sub '${AWS::StackName}-SecurityGroupID'

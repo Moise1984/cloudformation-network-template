@@ -1,0 +1,6 @@
+aws cloudformation create-change-set \
+    --stack-name my-root-stack \
+    --change-set-name my-root-stack-change-set \
+    --template-body file://template.yaml \
+    --capabilities CAPABILITY_IAM \
+    --include-nested-stacks 
