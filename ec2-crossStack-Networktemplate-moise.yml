@@ -1,0 +1,52 @@
+Parameters:
+  LatestAmiId:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+  InstanceType:
+    Description: WebServer EC2 instance type (has default, AllowedValues)
+    Type: String
+  # Default: t2.micro
+    AllowedValues: #possible ec2 types values
+      - t1.micro
+      - t2.nano
+      - t2.micro
+      - t2.small
+      - t3.micro
+    ConstraintDescription: must be a valid EC2 instance type.
+  KeyName:
+    Description: Name of an existing EC2 KeyPair 
+    Type: AWS::EC2::KeyPair::KeyName 
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.  
+Resources:
+  MyEC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: !Ref InstanceType 
+      ImageId: !Ref LatestAmiId 
+      KeyName: !Ref KeyName    
+      SubnetId: !ImportValue SampleNetworkCrossStack-SubnetID
+      SecurityGroupIds:
+        - !ImportValue  SampleNetworkCrossStack-SecurityGroupID
+      Tags:
+        - Key: Name
+          Value: myInstance    
+  MyEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      InstanceId: !Ref MyEC2Instance
+  
+      
+
+Outputs:
+  MyEC2Instance1:
+    Description: my private IPv4 address and my dns name
+    Value: !GetAtt MyEC2Instance.PrivateIp 
+  MyEIP:
+    Description: MY EIP
+    Value: !Ref MyEIP  
+  MyEC2Instance2:
+    Description: my dnsname
+    Value: !GetAtt MyEC2Instance.PublicDnsName 
+       
+    
+  
