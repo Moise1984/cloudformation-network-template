@@ -1,3 +1,8 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  AWS CloudFormation Sample Template VPC_with_PublicSubnet_WebsecurityGroup_And_OutputsSection: Sample template that creates a VPC with public subnet and security group 
+  that are also export in the output section . you may see all these exports in your aws cloudformation dashboard (outputs)
+  Note that you are billed for the AWS resources that you use when you create a stack from this template.
 Resources:
   VPC:
     Type: 'AWS::EC2::VPC'
