@@ -1,8 +1,0 @@
-AWSTemplateFormatVersion: '2010-09-09'
-Description: A simple EC2 instance from yaml file
-Resources:
-  MyEC2Instance:
-    Type: AWS::EC2::Instance
-    Properties:
-      ImageId: ami-0d5eff06f840b45e9 # PRETTY
-      InstanceType: t2.micro
